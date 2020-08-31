@@ -1,0 +1,9 @@
+{
+    "editor.fontFamily": "D2coding, Menlo, Monaco, 'Courier New', monospace",
+    "python.linting.flake8Enabled": true,
+    "python.formatting.provider": "black",
+    "editor.formatOnSave": true,
+    "python.linting.flake8Args": [
+        "--max-line-length=88"
+    ]
+}
