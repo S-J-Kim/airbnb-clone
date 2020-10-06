@@ -6,6 +6,36 @@ from users import models as user_models
 # Create your models here.
 
 
+class AbstractItem(core_models.TimeStampedModel):
+    name = models.CharField(max_length=80)
+
+    class Meta:
+        abstract = True
+
+    def __str__(self):
+        return self.name
+
+
+class RommType(AbstractItem):
+    class Meta:
+        verbose_name = "Room Type"
+
+
+class Amenity(AbstractItem):
+    class Meta:
+        verbose_name_plural = "Amenities"
+
+
+class Faclilty(AbstractItem):
+    class Meta:
+        verbose_name_plural = "Facilities"
+
+
+class HouseRule(AbstractItem):
+    class Meta:
+        verbose_name = "House Rule"
+
+
 class Room(core_models.TimeStampedModel):
     """Room Model"""
 
@@ -23,3 +53,19 @@ class Room(core_models.TimeStampedModel):
     check_out = models.TimeField()
     instant_book = models.BooleanField(default=False)
     host = models.ForeignKey(user_models.User, on_delete=models.CASCADE)
+    room_type = models.ForeignKey(RommType, on_delete=models.SET_NULL, null=True)
+    amenities = models.ManyToManyField(Amenity)
+    facilities = models.ManyToManyField(Faclilty)
+    house_rules = models.ManyToManyField(HouseRule)
+
+    def __str__(self):
+        return self.name
+
+
+class Photo(core_models.TimeStampedModel):
+    caption = models.CharField(max_length=80)
+    file = models.ImageField()
+    room = models.ForeignKey(Room, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.caption
